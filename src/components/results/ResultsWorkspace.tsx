@@ -52,6 +52,27 @@ export const ResultsWorkspace: React.FC = () => {
     }
   }, []);
 
+  // Keyboard navigation for image carousel
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+      if (session?.mode !== 'pdf-to-image') return;
+      const count = session.pdfToImageResults?.length || 0;
+      if (count <= 1) return;
+
+      if (e.key === 'ArrowLeft') {
+        setActiveImageIndex((prev) => (prev - 1 + count) % count);
+        setImageRotation(0);
+      } else if (e.key === 'ArrowRight') {
+        setActiveImageIndex((prev) => (prev + 1) % count);
+        setImageRotation(0);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [session]);
+
   if (!session) {
     return (
       <div className="max-w-xl mx-auto py-20 px-4 text-center">

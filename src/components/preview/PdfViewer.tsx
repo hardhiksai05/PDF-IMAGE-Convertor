@@ -115,6 +115,27 @@ export const PdfViewer: React.FC<PdfViewerProps> = ({ source, filename, classNam
     };
   }, [pdfDoc, currentPage, scale, rotation]);
 
+  // Keyboard navigation shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+
+      if (e.key === 'ArrowLeft') {
+        setCurrentPage((prev) => Math.max(1, prev - 1));
+      } else if (e.key === 'ArrowRight') {
+        setCurrentPage((prev) => Math.min(numPages, prev + 1));
+      } else if (e.key === '+' || e.key === '=') {
+        setScale((prev) => Math.min(3.0, Number((prev + 0.2).toFixed(1))));
+      } else if (e.key === '-' || e.key === '_') {
+        setScale((prev) => Math.max(0.5, Number((prev - 0.2).toFixed(1))));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [numPages]);
+
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(1, prev - 1));
   };
