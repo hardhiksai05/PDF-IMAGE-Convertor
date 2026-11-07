@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { MobileHeader } from './MobileHeader';
 import { Footer } from './Footer';
+import { cn } from '../../utils/cn';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -48,14 +49,19 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Mobile Top Header (Phone/Tablet) */}
       <MobileHeader />
 
-      {/* Desktop Vertical Sidebar matching reference image */}
+      {/* Desktop Vertical Sidebar matching reference image (fixed on scroll) */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Main Content Area - padded to avoid fixed sidebar on desktop */}
+      <div
+        className={cn(
+          'flex-1 flex flex-col min-w-0 transition-all duration-300',
+          isSidebarCollapsed ? 'md:pl-28' : 'md:pl-72'
+        )}
+      >
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl w-full mx-auto">
           {children}
         </main>
