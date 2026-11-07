@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 237 241 248; /* #edf1f8 matching reference image */
+    --color-surface: 255 255 255;
+    --color-border: 226 232 240;
+    --color-text: 15 23 42;
+    --color-muted: 100 116 139;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(226, 232, 240, 0.9);
+  }
+
+  .dark {
+    --color-bg: 13 14 21; /* #0d0e15 matching reference dark mockup */
+    --color-surface: 19 20 31; /* #13141f */
+    --color-border: 35 37 54;
+    --color-text: 248 250 252;
+    --color-muted: 148 163 184;
+    --glass-bg: rgba(19, 20, 31, 0.92);
+    --glass-border: rgba(255, 255, 255, 0.08);
+  }
+
+  * {
+    border-color: rgba(var(--color-border), 0.6);
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Reference image background with concentric circles & sparkles */
+.ref-bg-pattern {
+  background-color: #edf1f8;
+  background-image: 
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.85) 0%, rgba(237, 241, 248, 0.95) 60%, #e2e8f0 100%);
+}
+
+.dark .ref-bg-pattern {
+  background-color: #0d0e15;
+  background-image: 
+    radial-gradient(circle at 50% 35%, rgba(30, 27, 50, 0.7) 0%, rgba(13, 14, 21, 0.95) 65%, #08090d 100%);
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-panel-subtle {
+  background: rgba(19, 20, 31, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.light .glass-panel-subtle {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.glow-violet {
+  box-shadow: 0 0 50px -10px rgba(124, 58, 237, 0.25);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.25);
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.45);
+}
